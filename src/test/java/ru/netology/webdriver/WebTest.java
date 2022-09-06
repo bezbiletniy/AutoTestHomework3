@@ -28,7 +28,7 @@ public class WebTest {
     }
 
     @Test
-    void shouldValidName() {
+    void shouldValidNameAndLastName() {
         driver.get("http://localhost:9999");
     }
 
