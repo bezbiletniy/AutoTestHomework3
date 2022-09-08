@@ -8,10 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WebTest {
@@ -81,13 +79,32 @@ public class WebTest {
     }
 
     @Test
-    public void shouldZero() {
+    public void shouldZeroName() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
-        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79882333333");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.cssSelector(".button__text")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText();
         assertEquals("Поле обязательно для заполнения", text);
+    }
+
+    @Test
+    public void shouldZeroPhone() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Андрей Бородин-Петров");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector(".button__text")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
+        assertEquals("Поле обязательно для заполнения", text);
+    }
+
+    @Test
+    public void shouldZeroCheckBox() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Андрей Бородин-Петров");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79882822222");
+        driver.findElement(By.cssSelector(".button__text")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .checkbox__text")).getText();
+        assertEquals("Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй", text);
     }
 
     @Test
