@@ -72,7 +72,7 @@ public class WebTest {
 
     @Test
     public void shouldValidDataUseCss() {
-        driver.findElement(By.cssSelector("[type=\"text\"]")).sendKeys("Андрей Бородин");
+        driver.findElement(By.cssSelector("[type=\"text\"]")).sendKeys("Андрей Бородин-Петров");
         driver.findElement(By.cssSelector("[type=\"tel\"]")).sendKeys("+79256734744");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.cssSelector(".button__text")).click();
@@ -90,5 +90,23 @@ public class WebTest {
         assertEquals("Поле обязательно для заполнения", text);
     }
 
+    @Test
+    public void shouldNotValidFirstNumberPhone() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Андрей Бородин-Петров");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("89771727272");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector(".button__text")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
+        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", text);
+    }
 
+    @Test
+    public void shouldNotValidPhoneNumberMore() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Андрей Бородин-Петров");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("=+797717272722");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector(".button__text")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
+        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", text);
+    }
 }
