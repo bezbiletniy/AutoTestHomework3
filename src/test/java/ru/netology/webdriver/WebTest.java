@@ -67,17 +67,6 @@ public class WebTest {
         String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
         assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", text.trim());
     }
-
-    @Test
-    public void shouldValidDataUseCss() {
-        driver.findElement(By.cssSelector("[type=\"text\"]")).sendKeys("Андрей Бородин-Петров");
-        driver.findElement(By.cssSelector("[type=\"tel\"]")).sendKeys("+79256734744");
-        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
-        driver.findElement(By.cssSelector(".button__text")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id='order-success']")).getText();
-        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
-    }
-
     @Test
     public void shouldZeroName() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
